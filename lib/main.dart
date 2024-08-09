@@ -1,110 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/controller/myController.dart';
+import 'package:flutter_ecommerce/controller/responsiveUIController/responsiveController.dart';
+import 'package:flutter_ecommerce/pages/splash_screen/splash_screen.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/instance_manager.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'E-Commerce App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: MyResponsiveApp(),
+        home: ResponsiveView()
     );
   }
 }
 
-class MyResponsiveApp extends StatefulWidget {
+class ResponsiveView extends StatelessWidget {
   @override
-  State<MyResponsiveApp> createState() => _MyResponsiveAppState();
-}
-
-class _MyResponsiveAppState extends State<MyResponsiveApp> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth < 600) {
-            // Mobile layout
-            return MobileScreen();  
+      body: GetBuilder<ResponsiveController>(
+        init: ResponsiveController(),
+        builder: (controller) {
+          controller.updateScreenSize(MediaQuery.of(context).size);
+
+          Size screenSize =  controller.screenSize.value;
+
+          if(screenSize.width >= 800) {
+            return _buildWebLayout();
           } else {
-            // Web layout
-            return WebScreen();
+            return _buildMobileLayout();
           }
+
         },
       ),
     );
   }
-}
 
-
-
-
-
-class WebScreen extends StatefulWidget {
-  @override
-  State<WebScreen> createState() => _WebScreenState();
-}
-
-class _WebScreenState extends State<WebScreen> {
-  @override
-  Widget build(BuildContext context) {
-    // Get the screen width and height
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    // Define the width and height of the container as a percentage of screen size
-    final containerWidth = screenWidth * 0.25; // 80% of screen width
-    final containerHeight = screenHeight * 1; // 80% of screen height
-
-    return Scaffold(
-      body: Center(
-        child: Container(
-          width: containerWidth,
-          height: containerHeight,
-          //  If required add border to web screen
-          // decoration: BoxDecoration(
-          //   border: Border.all(
-          //     color: Colors.black, // Border color
-          //     width: 3, // Border width
-          //   ),
-          // ),
-          child:  MobileScreen()
-          ),
-        ),
-      );
-  }
-}
-
-
-class MobileScreen extends StatefulWidget {
-  @override
-  State<MobileScreen> createState() => _MobileScreenState();
-}
-
-class _MobileScreenState extends State<MobileScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("E-Commerce App"),
-      ),
-      body: Center(
-        
-      ),
+  // Web View
+  Widget _buildWebLayout() {
+    return Center(
+      child: _buildMobileLayout(),
     );
+  }
+
+  // Mobile View
+  Widget _buildMobileLayout() {
+    return SplashScreen();
   }
 }
