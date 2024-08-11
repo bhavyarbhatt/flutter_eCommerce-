@@ -14,6 +14,7 @@ class SplashScreen extends StatelessWidget {
 
     final SplashScreenController splashScreenController = Get.put(SplashScreenController());
 
+    // Splash Screen
     return  Scaffold(
         backgroundColor: Colors.white,
       body: GetBuilder<SplashScreenController>(
@@ -22,19 +23,19 @@ class SplashScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // SizedBox(height: screenHeight * 0.2,),
+
                 Text(""),
                 Image.asset(
                   "assets/splash_screen.png",
                   width: screenWidth * 0.3,
-                  height: screenHeight * 0.3,
+                  height: screenHeight * 0.4,
                 ),
 
                 Text(""),
                 Text(
                   'E Commerce App',
                   style: TextStyle(
-                      fontSize: screenWidth * 0.02,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                       color: Colors.black
                   ),

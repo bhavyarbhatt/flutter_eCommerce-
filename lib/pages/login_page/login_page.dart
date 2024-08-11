@@ -1,98 +1,117 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecommerce/main.dart';
+import 'package:flutter_ecommerce/pages/dashboard/dashboard_screen.dart';
+import 'package:flutter_ecommerce/pages/register_page/register_page.dart';
+import 'package:flutter_ecommerce/utils/widgets/OutlinedButton.dart';
+import 'package:flutter_ecommerce/utils/widgets/border.dart';
 import 'package:flutter_ecommerce/utils/widgets/dynamic_responsive.dart';
-import 'package:flutter_ecommerce/utils/widgets/splashs_screen_responsive_ui.dart';
+import 'package:flutter_ecommerce/utils/widgets/elevatedButton.dart';
+import 'package:flutter_ecommerce/utils/widgets/textFeild.dart';
 import 'package:get/get.dart';
 
-import '../../controller/responsiveUIController/responsiveController.dart';
+// Compliated
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+
+  bool _isObscure = true; // Move _isObscure here to manage state
+
   @override
   Widget build(BuildContext context) {
-    return ResponsiveHomePage(mobileLayout: _loginScreen());
-        }
+    return ResponsiveHomePage(mobileLayout: _loginScreen(context));
   }
 
- Widget _loginScreen() {
+  Widget _loginScreen(BuildContext context) {
+
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    //controller
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            "Login Screen",
-          style: TextStyle(
-            color: Colors.white
-          ),
+          "Login Screen",
+          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Image at the top
-            Image.asset(
-              'assets/splash_screen.png', // Replace with your image asset
-              height: 100,
-            ),
-            SizedBox(height: 30),
 
-            // Email TextField
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height -
+              AppBar().preferredSize.height -
+              16.0, // Adjust for AppBar height
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Evenly space the widgets
+              children: <Widget>[
 
-            // Password TextField
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 30),
+                // Image at the top
+                Image.asset(
+                  'assets/splash_screen.png',
+                  height: screenHeight * 0.2,
+                ),
 
-            // Submit Button
-            ElevatedButton(
-              onPressed: () {
-                // Handle submit logic
-              },
-              child: Text('Submit'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-              ),
-            ),
-            SizedBox(height: 20),
+                CustomTextField(
+                  controller: _emailController,
+                  labelText: 'Email',
+                  prefixIcon: Icons.email,
+                ),
 
-            // Register Button
-            OutlinedButton(
-              onPressed: () {
-                // Handle register logic (e.g., navigate to the registration screen)
-              },
-              child: Text('Register'),
-              style: OutlinedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-              ),
-            ),
-            SizedBox(height: 20),
+                CustomTextField(
+                  controller: _passwordController,
+                  labelText: 'Password',
+                  isPassword: true,
+                  prefixIcon: Icons.lock,
+                ),
 
-            // Skip Button
-            TextButton(
-              onPressed: () {
-                // Handle skip logic (e.g., navigate to the next screen)
-              },
-              child: Text(
-                'Skip for Demo',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
+                // Submit Button
+                ElevatedButtonWidget(
+                    onPressed: (){},
+                    horizontalPadding: screenHeight * 0.15,
+                    verticalPadding: screenHeight * 0.01,
+                    text: "Submit",
+                ),
+
+                OutlinedButtonWidget(
+                    onPressed: () {
+                      Get.off(RegisterScreen());
+                    },
+                    text: "Register",
+                    horizontalPadding: screenHeight * 0.14,
+                    verticalPadding: screenWidth * 0.01,
+                ),
+
+                // Skip Button
+                TextButton(
+                  onPressed: () {
+                    Get.off(ProductListScreen());
+                  },
+                  child: Text(
+                    'Skip for Demo',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
+  }
+}
 
- }
