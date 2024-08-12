@@ -37,7 +37,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   void _startPayment() {
     var options = {
-      'key': 'GVUJkdeouBLoyz', // Use the test API key
+      'key': 'apikey', // Use the test API key
       'amount': 5, // 500.00 INR
       'name': 'Test Payment',
       'description': 'Razorpay Test Payment',
