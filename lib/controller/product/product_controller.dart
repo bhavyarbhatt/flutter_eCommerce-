@@ -7,6 +7,19 @@ class ProductController extends GetxController {
   var products  = <Product>[];
   var isLoading = true;
 
+  List<Product> productList  = [
+    Product(
+        id: 1,
+        title: "Title",
+        price: 23,
+        description: "Descrittion",
+        category: "category",
+        image: "Image",
+        rating: Rating(rate: 4.5, count: 100)
+    ),
+
+  ];
+
   @override
   void onInit() {
     fetchProducts();
@@ -23,6 +36,7 @@ class ProductController extends GetxController {
       if(response.statusCode == 200){
         var jsonData = json.decode(response.body) as List;
         products = jsonData.map((json) => Product.fromJson(json)).toList();
+
       }else {
         Get.snackbar('Error', 'Failed to load products');
       }
@@ -42,3 +56,4 @@ class ProductController extends GetxController {
 
 
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/pages/Payments/payment_page.dart';
 import 'package:flutter_ecommerce/pages/dashboard/dashboard_screen.dart';
 import 'package:flutter_ecommerce/pages/register_page/register_page.dart';
 import 'package:flutter_ecommerce/utils/widgets/OutlinedButton.dart';
@@ -78,7 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // Submit Button
                 ElevatedButtonWidget(
-                    onPressed: (){},
+                    onPressed: (){
+                      Get.to(PaymentPage());
+                    },
                     horizontalPadding: screenHeight * 0.15,
                     verticalPadding: screenHeight * 0.01,
                     text: "Submit",
